@@ -1,19 +1,20 @@
 <?php
 class Database {
-    private $host = "localhost";
-    private $db_name = "Calendar";
-    private $username = "root";
-    private $password = "Mando.0$%";
-    public $conn;
+    private $host = 'localhost';
+    private $db_name = 'calendar';
+    private $username = 'root';
+    private $password = 'Mando.0$%';
+    private $conn;
 
     public function getConnection() {
-        $this->conn = null;
-        try {
-            $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
-            $this->conn->exec("set names utf8");
-        } catch (PDOException $exception) {
-            echo "Connection error: " . $exception->getMessage();
+        if (!$this->conn) {
+            $this->conn = new mysqli($this->host, $this->username, $this->password, $this->db_name);
+
+            if ($this->conn->connect_error) {
+                die('Conexión fallida: ' . $this->conn->connect_error);
+            }
         }
+
         return $this->conn;
     }
 }

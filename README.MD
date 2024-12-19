@@ -4,7 +4,7 @@ Este proyecto es una aplicación web desarrollada en **PHP 7**, **MySQL** y util
 
 ## 📁 Estructura del Proyecto
 
-/proyecto_vuelos_globo
+/proyecto_calendar
 │
 ├── /app
 │   ├── /controllers       # Controladores PHP

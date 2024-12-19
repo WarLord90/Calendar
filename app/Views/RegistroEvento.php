@@ -1,12 +1,17 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Evento</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
-</head>
-<body>
+<?php
+// Conexión a la base de datos
+require_once '../../config/database.php';
+
+// Importar el modelo MarcaModel
+require_once '../../app/models/MarcaModel.php';
+
+// Crear instancia del modelo MarcaModel
+$marcaModel = new MarcaModel();
+
+// Obtener marcas activas desde el modelo
+$marcas = $marcaModel->getMarcasActivas();
+?>
+
 <div class="container mt-5">
     <h1 class="text-center">Registro de Evento de Vuelo en Globo</h1>
     <form action="" method="POST" class="mt-4">
@@ -18,8 +23,9 @@
                     <label for="marca_venta" class="form-label">Marca de Venta</label>
                     <select id="marca_venta" name="marca_venta" class="form-select" required>
                         <option value="">Seleccione</option>
-                        <option value="Marca 1">Marca 1</option>
-                        <option value="Marca 2">Marca 2</option>
+                        <?php foreach ($marcas as $marca): ?>
+                            <option value="<?php echo $marca['id']; ?>"><?php echo $marca['marca']; ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="col-md-6">
@@ -154,5 +160,4 @@
         <button type="submit" class="btn btn-primary">Registrar Evento</button>
     </form>
 </div>
-</body>
-</html>
+

@@ -1,33 +1,26 @@
 <?php
 class UsuarioModel {
-    private $conn;
+    private $db;
     private $table_name = "usuarios";
 
     public function __construct($db) {
-        $this->conn = $db;
+        $this->db = $db;
     }
 
-    /**
-     * Valida un usuario usando texto plano para la contraseña
-     * 
-     * @param string $usuario
-     * @param string $contraseña
-     * @return bool
-     */
     public function validarUsuario($usuario, $contraseña) {
-        $query = "SELECT * FROM " . $this->table_name . " WHERE usuario = :usuario";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":usuario", $usuario);
+        $query = "SELECT * FROM " . $this->table_name . " WHERE usuario = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("s", $usuario);
         $stmt->execute();
 
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
 
-        // Verificar si se encontró un usuario y si la contraseña coincide
-        if ($user && $user['contraseña'] === $contraseña) {
-            return true;
+        if ($user) {
+            return $contraseña === $user['contraseña'];  // Validación sin hash
+        } else {
+            return false;
         }
-
-        return false;
     }
 }
 ?>
