@@ -4,12 +4,33 @@ require_once '../../config/database.php';
 
 // Importar el modelo MarcaModel
 require_once '../../app/models/MarcaModel.php';
+require_once '../../app/models/GeneroModel.php';
+require_once '../../app/models/MediosContactoModel.php';
+require_once '../../app/models/TiposVueloModel.php';
+require_once '../../app/models/GuiaModel.php';
+require_once '../../app/models/MotivoVueloModel.php';
+require_once '../../app/models/HotelesModel.php';
 
-// Crear instancia del modelo MarcaModel
+
+// Crear instancia de Modelos
 $marcaModel = new MarcaModel();
+$generoModel = new GeneroModel();
+$medioscontactoModel = new MediosContactoModel();
+$tiposvueloModel = new TiposVueloModel();
+$guiaModel = new GuiaModel();
+$motivovueloModel = new MotivoVueloModel();
+$hotelesModel = new HotelesModel();
 
-// Obtener marcas activas desde el modelo
+
+// Obtener catalogos activss desde el modelo
 $marcas = $marcaModel->getMarcasActivas();
+$generos = $generoModel->getGenerosActivos();
+$medioscontacto = $medioscontactoModel->getMediosContactoActivos();
+$tiposvuelo = $tiposvueloModel->getTiposVueloActivos();
+$guia = $guiaModel->getGuiasActivas();
+$motivovuelo = $motivovueloModel->getMotivosVueloActivos();
+$hoteles = $hotelesModel->getHotelesActivos();
+
 ?>
 
 <div class="container mt-5">
@@ -42,8 +63,9 @@ $marcas = $marcaModel->getMarcasActivas();
                     <label for="genero" class="form-label">Género</label>
                     <select id="genero" name="genero" class="form-select" required>
                         <option value="">Seleccione</option>
-                        <option value="Masculino">Masculino</option>
-                        <option value="Femenino">Femenino</option>
+                        <?php foreach ($generos as $genero): ?>
+                            <option value="<?php echo $genero['id']; ?>"><?php echo $genero['genero']; ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
             </div>
@@ -52,8 +74,9 @@ $marcas = $marcaModel->getMarcasActivas();
                     <label for="medio_contacto" class="form-label">Medio de Contacto</label>
                     <select id="medio_contacto" name="medio_contacto" class="form-select" required>
                         <option value="">Seleccione</option>
-                        <option value="Teléfono">Teléfono</option>
-                        <option value="Correo Electrónico">Correo Electrónico</option>
+                        <?php foreach ($medioscontacto as $medio): ?>
+                            <option value="<?php echo $medio['id']; ?>"><?php echo $medio['medio']; ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="col-md-6">
@@ -91,8 +114,9 @@ $marcas = $marcaModel->getMarcasActivas();
                     <label for="tipo_vuelo" class="form-label">Tipo de Vuelo</label>
                     <select id="tipo_vuelo" name="tipo_vuelo" class="form-select" required>
                         <option value="">Seleccione</option>
-                        <option value="Normal">Normal</option>
-                        <option value="Panorámico">Panorámico</option>
+                        <?php foreach ($tiposvuelo as $tipo): ?>
+                            <option value="<?php echo $tipo['id']; ?>"><?php echo $tipo['tipovuelo']; ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
             </div>
@@ -101,16 +125,18 @@ $marcas = $marcaModel->getMarcasActivas();
                     <label for="guia" class="form-label">Guía</label>
                     <select id="guia" name="guia" class="form-select" required>
                         <option value="">Seleccione</option>
-                        <option value="Guía 1">Guía 1</option>
-                        <option value="Guía 2">Guía 2</option>
+                        <?php foreach ($guia as $guias): ?>
+                            <option value="<?php echo $guias['id']; ?>"><?php echo $guias['guia']; ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="col-md-6">
                     <label for="motivo_vuelo" class="form-label">Motivo de Vuelo</label>
                     <select id="motivo_vuelo" name="motivo_vuelo" class="form-select">
                         <option value="">Seleccione</option>
-                        <option value="Vacaciones">Vacaciones</option>
-                        <option value="Celebración">Celebración</option>
+                        <?php foreach ($motivovuelo as $motivo): ?>
+                            <option value="<?php echo $motivo['id']; ?>"><?php echo $motivo['motivo']; ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
             </div>
@@ -144,8 +170,9 @@ $marcas = $marcaModel->getMarcasActivas();
                     <label for="hotel" class="form-label">Hotel</label>
                     <select id="hotel" name="hotel" class="form-select">
                         <option value="">Seleccione</option>
-                        <option value="Hotel A">Hotel A</option>
-                        <option value="Hotel B">Hotel B</option>
+                        <?php foreach ($hoteles as $hotel): ?>
+                            <option value="<?php echo $hotel['id']; ?>"><?php echo $hotel['hotel']; ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="col-md-6">
