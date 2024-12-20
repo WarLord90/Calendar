@@ -38,5 +38,11 @@ class RegistroEventoModel {
         }
     }
     
+    public function getRegistroEvento() {
+        $query = "SELECT * FROM vst_registro_evento WHERE activo = 1"; 
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
 }
 ?>
